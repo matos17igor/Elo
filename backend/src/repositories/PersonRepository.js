@@ -43,4 +43,15 @@ const findById = async (id) => {
   return person;
 };
 
-module.exports = { create, getAllPersons, findById };
+const updateStatus = async (id, status) => {
+  const db = await dbPromise;
+
+  const sql = `
+    UPDATE Persons SET status = ?
+    WHERE id = ?
+  `;
+
+  await db.run(sql, [status, id]);
+};
+
+module.exports = { create, getAllPersons, findById, updateStatus };
