@@ -2,7 +2,6 @@ const PersonRepository = require("../repositories/PersonRepository");
 
 const createPerson = async (req, res) => {
   try {
-    console.log("O que o Express recebeu no body:", req.body);
     const {
       nome_completo,
       idade,
@@ -33,4 +32,14 @@ const createPerson = async (req, res) => {
   }
 };
 
-module.exports = { createPerson };
+const getAll = async (req, res) => {
+  try {
+    const result = await PersonRepository.getAllPersons();
+    return res.status(200).json(result);
+  } catch (error) {
+    console.error("Erro no getAll:", error);
+    return res.status(500).json({ error: "Erro ao buscar pessoas" });
+  }
+};
+
+module.exports = { createPerson, getAll };

@@ -1,7 +1,6 @@
 const dbPromise = require("../database/database");
 
 const create = async (personData) => {
-  console.log("O que chegou no Repository:", personData);
   const db = await dbPromise;
 
   const sql = `
@@ -22,4 +21,15 @@ const create = async (personData) => {
   await db.run(sql, values);
 };
 
-module.exports = { create };
+const getAllPersons = async () => {
+  const db = await dbPromise;
+
+  const sql = `
+    SELECT id, nome_completo, idade, caracteristicas, ultimo_local, status, telefone FROM Persons
+  `;
+
+  const persons = await db.all(sql);
+  return persons;
+};
+
+module.exports = { create, getAllPersons };
