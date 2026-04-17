@@ -32,4 +32,15 @@ const getAllPersons = async () => {
   return persons;
 };
 
-module.exports = { create, getAllPersons };
+const findById = async (id) => {
+  const db = await dbPromise;
+
+  const sql = `
+        SELECT * FROM Persons 
+        WHERE id = ?
+    `;
+  const person = await db.get(sql, [id]);
+  return person;
+};
+
+module.exports = { create, getAllPersons, findById };

@@ -42,4 +42,24 @@ const getAll = async (req, res) => {
   }
 };
 
-module.exports = { createPerson, getAll };
+const getPersonById = async (req, res) => {
+  try {
+    const id = req.params.id;
+
+    const person = await PersonRepository.findById(id);
+
+    if (!person) {
+      return res
+        .status(404)
+        .json({ error: "Nao existe uma pessoa com esse id." });
+    }
+    return res.status(200).json(person);
+  } catch (error) {
+    console.error("Erro ao buscar pessoa por ID:", error);
+    return res
+      .status(500)
+      .json({ error: "Erro interno ao buscar o registro." });
+  }
+};
+
+module.exports = { createPerson, getAll, getPersonById };
