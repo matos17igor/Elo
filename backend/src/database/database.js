@@ -19,10 +19,17 @@ const criarBanco = async () => {
     status TEXT NOT NULL,
     telefone TEXT,
     data_registro TEXT DEFAULT CURRENT_TIMESTAMP
-    )
+    );
+
+    CREATE TABLE IF NOT EXISTS Users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nome TEXT NOT NULL,
+    email TEXT UNIQUE NOT NULL,
+    senha TEXT NOT NULL
+    );
     `);
 
-  console.log("Tabela Persons criada com sucesso!");
+  console.log("Tabela Persons, Users criada com sucesso!");
 };
 
 criarBanco();
