@@ -18,7 +18,9 @@ const criarBanco = async () => {
     ultimo_local TEXT,
     status TEXT NOT NULL,
     telefone TEXT,
-    data_registro TEXT DEFAULT CURRENT_TIMESTAMP
+    data_registro TEXT DEFAULT CURRENT_TIMESTAMP,
+    usuario_id INTEGER NOT NULL,
+    FOREIGN KEY (usuario_id) REFERENCES Users(id)
     );
 
     CREATE TABLE IF NOT EXISTS Users (

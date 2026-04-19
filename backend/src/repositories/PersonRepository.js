@@ -4,8 +4,8 @@ const create = async (personData) => {
   const db = await dbPromise;
 
   const sql = `
-    INSERT INTO Persons (nome_completo, idade, caracteristicas, ultimo_local, status, telefone)
-    VALUES (?, ?, ?, ?, ?, ?)
+    INSERT INTO Persons (nome_completo, idade, caracteristicas, ultimo_local, status, telefone, usuario_id)
+    VALUES (?, ?, ?, ?, ?, ?, ?)
   `;
 
   // Os valores vao vir do frontend do objeto personData
@@ -16,6 +16,7 @@ const create = async (personData) => {
     personData.ultimo_local,
     personData.status,
     personData.telefone,
+    personData.usuario_id,
   ];
 
   await db.run(sql, values);
@@ -25,7 +26,7 @@ const getAllPersons = async () => {
   const db = await dbPromise;
 
   const sql = `
-    SELECT id, nome_completo, idade, caracteristicas, ultimo_local, status, telefone FROM Persons
+    SELECT id, nome_completo, idade, caracteristicas, ultimo_local, status, telefone, usuario_id FROM Persons
   `;
 
   const persons = await db.all(sql);
