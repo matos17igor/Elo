@@ -91,7 +91,7 @@ const updateStatus = async (req, res) => {
 
 const deletePerson = async (req, res) => {
   try {
-    const { id } = req.body;
+    const { id } = req.params;
     await PersonRepository.deletePerson(id);
     return res.status(200).json({ message: "Registro apagado com sucesso!" });
   } catch (error) {
