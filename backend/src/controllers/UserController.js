@@ -1,4 +1,5 @@
 const UserRepository = require("../repositories/UserRepository");
+const bcrypt = require("bcrypt");
 
 const createUser = async (req, res) => {
   try {
@@ -18,7 +19,10 @@ const createUser = async (req, res) => {
       return res.status(400).json({ error: "Esse e-mail já está em uso." });
     }
 
-    await UserRepository.createUser({ nome, email, senha });
+    const salt = await bcrypt.genSalt(10);
+    const senhaCriptografada = await bcrypt.hash(senha, salt);
+
+    await UserRepository.createUser({ nome, email, senha: senhaCriptografada });
     return res.status(201).json({ message: "Usuario cadastrado com sucesso!" });
   } catch (error) {
     console.error("Erro ao salvar usuario:", error);
