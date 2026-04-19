@@ -89,4 +89,20 @@ const updateStatus = async (req, res) => {
   }
 };
 
-module.exports = { createPerson, getAll, getPersonById, updateStatus };
+const deletePerson = async (req, res) => {
+  try {
+    const { id } = req.body;
+    await PersonRepository.deletePerson(id);
+    return res.status(200).json({ message: "Registro apagado com sucesso!" });
+  } catch (error) {
+    return res.status(500).json({ error: "Erro ao apagar o registro." });
+  }
+};
+
+module.exports = {
+  createPerson,
+  getAll,
+  getPersonById,
+  updateStatus,
+  deletePerson,
+};

@@ -26,7 +26,8 @@ const getAllPersons = async () => {
   const db = await dbPromise;
 
   const sql = `
-    SELECT id, nome_completo, idade, caracteristicas, ultimo_local, status, telefone, usuario_id FROM Persons
+    SELECT Persons.*, Locations.nome as nome_abrigo FROM Persons 
+    LEFT JOIN Locations ON Persons.location_id = Locations.id
   `;
 
   const persons = await db.all(sql);
@@ -55,4 +56,20 @@ const updateStatus = async (id, status, location_id) => {
   await db.run(sql, [status, location_id, id]);
 };
 
-module.exports = { create, getAllPersons, findById, updateStatus };
+const deletePerson = async (id) => {
+  const db = await dbPromise;
+
+  const sql = `
+    DELETE FROM Persons WHERE id = ?
+  `;
+
+  await db.run(sql, [id]);
+};
+
+module.exports = {
+  create,
+  getAllPersons,
+  findById,
+  updateStatus,
+  deletePerson,
+};

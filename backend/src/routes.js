@@ -10,6 +10,7 @@ router.get("/persons", PersonController.getAll);
 router.get("/persons/:id", PersonController.getPersonById);
 // Patch permite editar apenas um campo, Put edita tudo
 router.patch("/persons/:id", PersonController.updateStatus);
+router.delete("/persons/:id", PersonController.deletePerson);
 
 router.post("/users", UserController.createUser);
 router.get("/users", UserController.getAllUsers);
