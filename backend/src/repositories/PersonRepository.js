@@ -44,15 +44,15 @@ const findById = async (id) => {
   return person;
 };
 
-const updateStatus = async (id, status) => {
+const updateStatus = async (id, status, location_id) => {
   const db = await dbPromise;
 
   const sql = `
-    UPDATE Persons SET status = ?
+    UPDATE Persons SET status = ?, location_id = ?
     WHERE id = ?
   `;
 
-  await db.run(sql, [status, id]);
+  await db.run(sql, [status, location_id, id]);
 };
 
 module.exports = { create, getAllPersons, findById, updateStatus };

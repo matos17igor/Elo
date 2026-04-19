@@ -10,28 +10,38 @@ const criarBanco = async () => {
   const db = await dbPromise;
 
   await db.exec(`
-    CREATE TABLE IF NOT EXISTS Persons (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    nome_completo TEXT NOT NULL,
-    idade INTEGER,
-    caracteristicas TEXT,
-    ultimo_local TEXT,
-    status TEXT NOT NULL,
-    telefone TEXT,
-    data_registro TEXT DEFAULT CURRENT_TIMESTAMP,
-    usuario_id INTEGER NOT NULL,
-    FOREIGN KEY (usuario_id) REFERENCES Users(id)
-    );
-
     CREATE TABLE IF NOT EXISTS Users (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    nome TEXT NOT NULL,
-    email TEXT UNIQUE NOT NULL,
-    senha TEXT NOT NULL
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      nome TEXT NOT NULL,
+      email TEXT UNIQUE NOT NULL,
+      senha TEXT NOT NULL
     );
-    `);
 
-  console.log("Tabela Persons, Users criada com sucesso!");
+    CREATE TABLE IF NOT EXISTS Locations (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      nome TEXT NOT NULL,
+      endereco TEXT NOT NULL,
+      capacidade INTEGER,
+      contato TEXT
+    );
+
+    CREATE TABLE IF NOT EXISTS Persons (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      nome_completo TEXT NOT NULL,
+      idade INTEGER,
+      caracteristicas TEXT,
+      ultimo_local TEXT,
+      status TEXT NOT NULL,
+      telefone TEXT,
+      data_registro TEXT DEFAULT CURRENT_TIMESTAMP,
+      usuario_id INTEGER NOT NULL,
+      location_id INTEGER,
+      FOREIGN KEY (usuario_id) REFERENCES Users(id),
+      FOREIGN KEY (location_id) REFERENCES Locations(id)
+    );
+  `);
+
+  console.log("Tabela Persons, Users, Locations criada com sucesso!");
 };
 
 criarBanco();

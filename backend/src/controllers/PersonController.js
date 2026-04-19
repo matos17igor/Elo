@@ -69,13 +69,17 @@ const getPersonById = async (req, res) => {
 const updateStatus = async (req, res) => {
   try {
     const id = req.params.id;
-    const { status } = req.body;
+    const { status, location_id } = req.body;
 
     if (!status) {
       return res.status(400).json({ error: "O novo status é obrigatório." });
     }
 
-    await PersonRepository.updateStatus(id, status);
+    if (!location_id) {
+      return res.status(400).json({ error: "O abrigo é obrigatório." });
+    }
+
+    await PersonRepository.updateStatus(id, location_id, status);
     return res.status(200).json({ message: "Status atualizado com sucesso!" });
   } catch (error) {
     console.error("Erro ao atualizar status:", error);
