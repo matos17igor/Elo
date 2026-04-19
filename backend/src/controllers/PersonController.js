@@ -10,6 +10,7 @@ const createPerson = async (req, res) => {
       status,
       telefone,
       usuario_id,
+      location_id,
     } = req.body;
 
     if (!nome_completo || !status || !usuario_id) {
@@ -25,6 +26,7 @@ const createPerson = async (req, res) => {
       status,
       telefone,
       usuario_id,
+      location_id,
     });
 
     return res.status(201).json({ message: "Registro salvo com sucesso!" });

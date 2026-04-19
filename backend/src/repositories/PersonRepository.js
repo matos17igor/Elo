@@ -4,8 +4,8 @@ const create = async (personData) => {
   const db = await dbPromise;
 
   const sql = `
-    INSERT INTO Persons (nome_completo, idade, caracteristicas, ultimo_local, status, telefone, usuario_id)
-    VALUES (?, ?, ?, ?, ?, ?, ?)
+    INSERT INTO Persons (nome_completo, idade, caracteristicas, ultimo_local, status, telefone, usuario_id, location_id)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
   `;
 
   // Os valores vao vir do frontend do objeto personData
@@ -17,6 +17,7 @@ const create = async (personData) => {
     personData.status,
     personData.telefone,
     personData.usuario_id,
+    personData.location_id || null,
   ];
 
   await db.run(sql, values);
