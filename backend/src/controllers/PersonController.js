@@ -9,13 +9,14 @@ const createPerson = async (req, res) => {
       ultimo_local,
       status,
       telefone,
-      usuario_id,
       location_id,
     } = req.body;
 
-    if (!nome_completo || !status || !usuario_id) {
+    const usuario_id = req.usuarioId;
+
+    if (!nome_completo || !status) {
       return res.status(400).json({
-        error: "Nome completo, status e usuario_id são obrigatórios.",
+        error: "Nome completo e status são obrigatórios.",
       });
     }
     await PersonRepository.create({
