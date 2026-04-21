@@ -6,8 +6,8 @@ const create = async (locationData) => {
   await db.run(sql, [
     locationData.nome,
     locationData.endereco,
-    locationData.capacidade,
-    locationData.contato,
+    locationData.capacidade || null,
+    locationData.contato || null,
   ]);
 };
 
