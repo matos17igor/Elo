@@ -102,10 +102,51 @@ const deletePerson = async (req, res) => {
   }
 };
 
+const updatePerson = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const {
+      nome_completo,
+      idade,
+      caracteristicas,
+      ultimo_local,
+      status,
+      telefone,
+      location_id,
+    } = req.body;
+
+    if (!nome_completo || !status) {
+      return res.status(400).json({ error: "Nome e Status são obrigatórios." });
+    }
+
+    const updatedData = {
+      nome_completo,
+      idade,
+      caracteristicas,
+      ultimo_local,
+      status,
+      telefone,
+      location_id: location_id || null,
+    };
+
+    await PersonRepository.update(id, updatedData);
+
+    return res
+      .status(200)
+      .json({ message: "Registro atualizado com sucesso!" });
+  } catch (error) {
+    console.error("Erro no updatePerson:", error);
+    return res
+      .status(500)
+      .json({ error: "Erro interno ao atualizar registro." });
+  }
+};
+
 module.exports = {
   createPerson,
   getAll,
   getPersonById,
   updateStatus,
   deletePerson,
+  updatePerson,
 };

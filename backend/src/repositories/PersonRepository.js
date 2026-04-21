@@ -67,10 +67,42 @@ const deletePerson = async (id) => {
   await db.run(sql, [id]);
 };
 
+const getStats = async () => {
+  const db = await dbPromise;
+  const missing = await db.get(
+    "SELECT COUNT(*) as count FROM Persons WHERE status = 'DESAPARECIDO'"
+  );
+  const rescued = await db.get(
+    "SELECT COUNT(*) as count FROM Persons WHERE status = 'RESGATADO'"
+  );
+  return { missing: missing.count, rescued: rescued.count };
+};
+
+const update = async (id, data) => {
+  const db = await dbPromise;
+  const sql = `
+    UPDATE Persons 
+    SET nome_completo = ?, idade = ?, caracteristicas = ?, ultimo_local = ?, status = ?, telefone = ?, location_id = ?
+    WHERE id = ?
+  `;
+  await db.run(sql, [
+    data.nome_completo,
+    data.idade,
+    data.caracteristicas,
+    data.ultimo_local,
+    data.status,
+    data.telefone,
+    data.location_id || null,
+    id,
+  ]);
+};
+
 module.exports = {
   create,
   getAllPersons,
   findById,
   updateStatus,
   deletePerson,
+  getStats,
+  update,
 };
